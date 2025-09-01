@@ -4,7 +4,7 @@
  * 
  * This file contains the nginx purge methods
  * 
- * @since 8.1
+ * @since 7.4
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -21,7 +21,7 @@ if( ! trait_exists( 'NGINX' ) ) {
      *
      * This trait contains the nginx purge methods
      *
-     * @since 8.1
+     * @since 7.4
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
      *
@@ -34,7 +34,7 @@ if( ! trait_exists( 'NGINX' ) ) {
          * This method attempts to purge nginx based caches
          * if they exist
          * 
-         * @since 8.1
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger

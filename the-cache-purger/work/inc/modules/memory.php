@@ -4,7 +4,7 @@
  * 
  * This file contains the memory purge methods
  * 
- * @since 8.1
+ * @since 7.4
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -21,7 +21,7 @@ if( ! trait_exists( 'MEMORY' ) ) {
      *
      * This trait contains the memory purge methods
      *
-     * @since 8.1
+     * @since 7.4
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
      *
@@ -33,7 +33,7 @@ if( ! trait_exists( 'MEMORY' ) ) {
          * 
          * This method attempts to delete the memory based caches
          * 
-         * @since 8.1
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -65,7 +65,7 @@ if( ! trait_exists( 'MEMORY' ) ) {
          * 
          * This method attempts to purge the redis servers configured
          * 
-         * @since 8.1
+         * @since 7.4
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -111,12 +111,6 @@ if( ! trait_exists( 'MEMORY' ) ) {
                                     $_cfg['database'] = $_server['remote_redis_db_id'];
                                 }
 
-                                // if there's a prefix/key
-                                $_prefix = null;
-                                if( ! empty( $_server['remote_redis_prefixkey'] ) ) {
-                                    $_prefix = $_server['remote_redis_prefixkey'];
-                                }
-
                                 // if there's a redis auth username and password
                                 if( ! empty( $_server['remote_redis_auth_user'] ) && ! empty( $_server['remote_redis_auth_pass'] ) ) {
                                     $_cfg['auth'] = array(
@@ -125,58 +119,28 @@ if( ! trait_exists( 'MEMORY' ) ) {
                                     );
                                 }
                                 
-                                // connect to the database
-                                $_redis -> connect( ...$_cfg );
+                                // older than PHP 8.0 support
+                                if ( version_compare( PHP_VERSION, '8.0', '<=' ) ) {
 
-                                // if we have a prefix/key
-                                if( $_prefix ) {
+                                    // connect
+                                    call_user_func_array( [$_redis, 'connect'], $_cfg );
 
-                                    // setup the index
-                                    $_idx = 0;
-
-                                    // we have to iterate over all items with this prefix/key
-                                    do {
-
-                                        // Scan for keys matching the prefix
-                                        $_keys = $_redis -> scan( $_idx, $_prefix . '*' );
-
-                                        // make sure we aren't throwing ourselves into an endless loop here
-                                        if ( $_keys === false ) {
-
-                                            // No more keys to scan, so break out of the loop
-                                            break; 
-                                        }
-                                        
-                                        // as long as it's not empty
-                                        if ( ! empty( $_keys ) ) {
-                                            
-                                            // delete the item
-                                            $_redis -> unlink( $_keys );
-                                        }
-
-                                    // while we're greater than 0
-                                    } while ( $_idx !== 0 );
-
-                                // let's only flush the database
-                                } elseif( ! empty( $_server['remote_redis_db_id'] ) ) {
-
-                                    // only flush the database
-                                    $_redis -> flushDB( );
-
-                                // we can flush all
+                                // otherwise
                                 } else {
 
-                                    // now flush
-                                    $_redis -> flushAll( );
+                                    // connect
+                                    $_redis -> connect( ...$_cfg );
 
                                 }
+
+                                // now flush
+                                $_redis -> flushAll( );
 
                                 // now close the connection
                                 $_redis -> close( );
 
                             } catch ( Exception $e ) {
                                 // do nothing... php will ignore and continue 
-
                             }
 
                         }
@@ -200,7 +164,7 @@ if( ! trait_exists( 'MEMORY' ) ) {
          * 
          * This method attempts to purge the memcache servers configured
          * 
-         * @since 8.1
+         * @since 7.4
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -260,7 +224,7 @@ if( ! trait_exists( 'MEMORY' ) ) {
          * 
          * This method attempts to purge the memcached servers configured
          * 
-         * @since 8.1
+         * @since 7.4
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
