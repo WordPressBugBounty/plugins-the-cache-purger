@@ -4,7 +4,7 @@
  * 
  * This file contains the api purge methods
  * 
- * @since 7.4
+ * @since 8.1
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -21,7 +21,7 @@ if( ! trait_exists( 'API' ) ) {
      *
      * This trait contains the api purge methods
      *
-     * @since 7.4
+     * @since 8.1
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
      *
@@ -34,7 +34,7 @@ if( ! trait_exists( 'API' ) ) {
          * This method attempts to utilize the purge methods 
          * of the configured remote caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -74,7 +74,7 @@ if( ! trait_exists( 'API' ) ) {
             }
 
             // make sure we have keys for sucuri
-            if( $_sucuri_key && $_cf_zone ) {
+            if( $_sucuri_key && $_sucuri_secret  ) {
 
                 // sucuri
                 $this -> purge_api_sucuri( $_sucuri_key, $_sucuri_secret );
@@ -99,7 +99,7 @@ if( ! trait_exists( 'API' ) ) {
          * 
          * This method attempts to purge the fastly cdn caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -154,7 +154,7 @@ if( ! trait_exists( 'API' ) ) {
          * 
          * This method attempts to purge the sucuri cache configured
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -208,7 +208,7 @@ if( ! trait_exists( 'API' ) ) {
          * 
          * This method attempts to purge the cloudflare cache configured
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger

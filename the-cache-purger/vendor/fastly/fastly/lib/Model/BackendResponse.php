@@ -60,6 +60,7 @@ class BackendResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'comment' => 'string',
         'connect_timeout' => 'int',
         'first_byte_timeout' => 'int',
+        'fetch_timeout' => 'int',
         'healthcheck' => 'string',
         'hostname' => 'string',
         'ipv4' => 'string',
@@ -112,6 +113,7 @@ class BackendResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'comment' => null,
         'connect_timeout' => null,
         'first_byte_timeout' => null,
+        'fetch_timeout' => null,
         'healthcheck' => null,
         'hostname' => null,
         'ipv4' => null,
@@ -183,6 +185,7 @@ class BackendResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'comment' => 'comment',
         'connect_timeout' => 'connect_timeout',
         'first_byte_timeout' => 'first_byte_timeout',
+        'fetch_timeout' => 'fetch_timeout',
         'healthcheck' => 'healthcheck',
         'hostname' => 'hostname',
         'ipv4' => 'ipv4',
@@ -233,6 +236,7 @@ class BackendResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'comment' => 'setComment',
         'connect_timeout' => 'setConnectTimeout',
         'first_byte_timeout' => 'setFirstByteTimeout',
+        'fetch_timeout' => 'setFetchTimeout',
         'healthcheck' => 'setHealthcheck',
         'hostname' => 'setHostname',
         'ipv4' => 'setIpv4',
@@ -283,6 +287,7 @@ class BackendResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         'comment' => 'getComment',
         'connect_timeout' => 'getConnectTimeout',
         'first_byte_timeout' => 'getFirstByteTimeout',
+        'fetch_timeout' => 'getFetchTimeout',
         'healthcheck' => 'getHealthcheck',
         'hostname' => 'getHostname',
         'ipv4' => 'getIpv4',
@@ -384,6 +389,7 @@ class BackendResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->container['comment'] = $data['comment'] ?? null;
         $this->container['connect_timeout'] = $data['connect_timeout'] ?? null;
         $this->container['first_byte_timeout'] = $data['first_byte_timeout'] ?? null;
+        $this->container['fetch_timeout'] = $data['fetch_timeout'] ?? null;
         $this->container['healthcheck'] = $data['healthcheck'] ?? null;
         $this->container['hostname'] = $data['hostname'] ?? null;
         $this->container['ipv4'] = $data['ipv4'] ?? null;
@@ -408,9 +414,9 @@ class BackendResponse implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->container['ssl_hostname'] = $data['ssl_hostname'] ?? null;
         $this->container['ssl_sni_hostname'] = $data['ssl_sni_hostname'] ?? null;
         $this->container['tcp_keepalive_enable'] = $data['tcp_keepalive_enable'] ?? null;
-        $this->container['tcp_keepalive_interval'] = $data['tcp_keepalive_interval'] ?? null;
-        $this->container['tcp_keepalive_probes'] = $data['tcp_keepalive_probes'] ?? null;
-        $this->container['tcp_keepalive_time'] = $data['tcp_keepalive_time'] ?? null;
+        $this->container['tcp_keepalive_interval'] = $data['tcp_keepalive_interval'] ?? 10;
+        $this->container['tcp_keepalive_probes'] = $data['tcp_keepalive_probes'] ?? 3;
+        $this->container['tcp_keepalive_time'] = $data['tcp_keepalive_time'] ?? 300;
         $this->container['use_ssl'] = $data['use_ssl'] ?? null;
         $this->container['weight'] = $data['weight'] ?? null;
         $this->container['created_at'] = $data['created_at'] ?? null;
@@ -510,7 +516,7 @@ class BackendResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets between_bytes_timeout
      *
-     * @param int|null $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using `bereq.between_bytes_timeout`.
+     * @param int|null $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, for Delivery services, the response received so far will be considered complete and the fetch will end. For Compute services, timeout expiration is treated as a failure of the backend connection, and an error is generated. May be set at runtime using `bereq.between_bytes_timeout`.
      *
      * @return self
      */
@@ -613,6 +619,30 @@ class BackendResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     public function setFirstByteTimeout($first_byte_timeout)
     {
         $this->container['first_byte_timeout'] = $first_byte_timeout;
+
+        return $this;
+    }
+
+    /**
+     * Gets fetch_timeout
+     *
+     * @return int|null
+     */
+    public function getFetchTimeout()
+    {
+        return $this->container['fetch_timeout'];
+    }
+
+    /**
+     * Sets fetch_timeout
+     *
+     * @param int|null $fetch_timeout Maximum duration in milliseconds to wait for the entire response to be received after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic `503` response will be presented instead. May be set at runtime using `bereq.fetch_timeout`.
+     *
+     * @return self
+     */
+    public function setFetchTimeout($fetch_timeout)
+    {
+        $this->container['fetch_timeout'] = $fetch_timeout;
 
         return $this;
     }
@@ -894,7 +924,7 @@ class BackendResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets prefer_ipv6
      *
-     * @param bool|null $prefer_ipv6 Prefer IPv6 connections for DNS hostname lookups.
+     * @param bool|null $prefer_ipv6 Prefer IPv6 connections to origins for hostname backends. Default is 'false' for Delivery services and 'true' for Compute services.
      *
      * @return self
      */
@@ -971,7 +1001,7 @@ class BackendResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets shield
      *
-     * @param string|null $shield Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding).
+     * @param string|null $shield Identifier of the POP to use as a [shield](https://www.fastly.com/documentation/guides/getting-started/hosts/shielding/).
      *
      * @return self
      */

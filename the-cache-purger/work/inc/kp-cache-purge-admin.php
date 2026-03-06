@@ -4,7 +4,7 @@
  * 
  * This file contains cache purging settings and admin pages
  * 
- * @since 7.4
+ * @since 8.1
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -21,7 +21,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
      * 
      * Class for building out our settings and admin pages
      * 
-     * @since 7.4
+     * @since 8.1
      * @access public
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
@@ -34,7 +34,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * 
          * Public method pull together the settings and admin pages
          * 
-         * @since 7.4
+         * @since 8.1
          * @access public
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -66,8 +66,8 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'sticky_header' => false,  
                     'ajax_save' => false,           
                     'framework_title' => __( 'The Cache Purger <small>by Kevin C. Pirnie</small>', 'the-cache-purger' ),
-                    'footer_text' => '<a href="https://kevinpirnie.com" target="_blank"><img src="https://cdn.kevp.cc/kp/kevinpirnie-logo-color.svg" alt="Kevin Pirnie: https://kevinpirnie.com" style="width:250px !important;" /></a>',
-                    ) );
+                    'footer_text' => '<a href="https://kevinpirnie.com" target="_blank"><img src="https://cdn.kevp.us/kp/kevinpirnie-logo-color.svg" alt="Kevin Pirnie: https://kevinpirnie.com" style="width:250px !important;" /></a>',
+                ) );
 
                 // Settings
                 KPTCP::createSection( $_cp_settings_id, 
@@ -172,7 +172,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     if( ! is_network_admin( ) ) {
 
                         // get the current page we are on
-                        $_uri = sanitize_url( $_SERVER['REQUEST_URI'] );
+                        $_uri = sanitize_url( isset( $_SERVER['REQUEST_URI'] ) ?? '' );
 
                         // see if the uri contains any ?
                         if( strpos( $_uri, '?' ) !== false ) {
@@ -212,7 +212,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * 
          * Private method pull together the cronex settings fields
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -289,7 +289,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * 
          * Private method pull together the api/server settings fields
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -365,6 +365,15 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                             'type' => 'text',
                             'class' => 'kptcp-half-field',
                             'desc' => __( 'Enter your database ID', 'the-cache-purger' ),
+                        ),
+
+                        // prefix or key
+                        array(
+                            'id' => 'remote_redis_prefixkey',
+                            'title' => __( 'Prefix/Key', 'the-cache-purger' ),
+                            'type' => 'text',
+                            'class' => 'kptcp-half-field',
+                            'desc' => __( 'Enter your prefix/key', 'the-cache-purger' ),
                         ),
 
                     ),
@@ -533,7 +542,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * 
          * Private method pull together the settings fields
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -770,7 +779,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * 
          * Private method pull together the documentation
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -813,7 +822,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * 
          * Private method pull in the purge log for display in the backend
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -856,7 +865,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * 
          * Private method pull all forms
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -901,7 +910,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * 
          * Private method pull all ACF field groups
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -946,7 +955,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * 
          * The method pulls the current WP Cron schedules
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger

@@ -1,5 +1,138 @@
 # Changelog
 
+## [v13.0.0](https://github.com/fastly/fastly-php/releases/tag/release/v13.0.0) (2026-02-16)
+
+**Breaking Changes:**
+
+- deprecated(user): The Compute package metadata model `hashsum` and `size` fields have been deprecated.
+
+
+**Enhancements:**
+
+- feat(apisecurity-operations): Add new API Security Operations API.
+- feat(domain-inspector-realtime, domain-inspector-historical): Add new metrics `compute_*`.
+- feat(realtime, historical): Add new metrics `compute_resp_status_*`.
+- feat(realtime, historical): Add new metric `ngwaf_bot_analysis_request_count`.
+- feat(backend): Add support for `fetch_timeout` field.
+- feat(historical): Add support for `datacenter` query.
+
+
+## [v12.1.0](https://github.com/fastly/fastly-php/releases/tag/release/v12.1.0) (2025-12-09)
+
+**Enhancements:**
+
+- feat(realtime, historical): Add new metrics `imgopto_compute_requests`, `dns_billable_responses_count`,
+                              `dns_nonbillable_responses_count`, and `upgrade`.
+- feat(products[ngwaf]): Add new parameter `traffic_ramp` to `enable-product-ngwaf`.
+- feat(products[ddos_protection]): Add new parameter `mode` to `enable-product-ddos-protection`.
+- feat(kv_store): Add `kv-store-put` operation.
+- feat(iam_roles): Add `DisplayName` field to model.
+- feat(domain_research): Add new Domain Research API.
+- feat(ddos_protection): Add `requests_allowed` and `requests_detected` fields to DDoS Protection event API.
+
+- feat(products): Add `domain_research` product to enablement API.
+
+
+
+**Documentation:**
+
+- doc(enabled-products): Add support for optional enablement parameters for some products.
+
+
+## [v12.0.0](https://github.com/fastly/fastly-php/releases/tag/release/v12.0.0) (2025-10-31)
+
+**Bug fixes:**
+
+- fix(dictionary): Correct example dictionary name to use valid characters
+
+**Enhancements:**
+
+- feat(iam_roles): Add new IAM Roles API.
+- feat(api_discovery): Add new API Discovery API.
+- feat(realtime, historical): Add new metric `api_discovery_requests_count`.
+- feat(user): Add the ability to assign multiple roles to users.
+- feat(healthcheck): Clarify the valid range for the `check_interval` parameter.
+- feat(ddos_protection): Add `traffic_percentage` field to DDoS Protection traffic statistics responses.
+- feat(ddos_protection): Update `ddos-protection-event-rule-list` with `include=traffic_stats` parameter for embedded traffic statistics.
+- feat(logging_https): Add `period` parameter to the logging HTTPS endpoint.
+
+**Documentation:**
+
+- doc(sudo): Spelling fixes.
+- doc(enabled-products): Add support for product ID `api_discovery`.
+
+
+## [v11.0.0](https://github.com/fastly/fastly-php/releases/tag/release/v11.0.0) (2025-08-28)
+
+**Breaking Changes:**
+
+- removed(ddos_protection): Remove enum configs `ddos_protection_action` and ``ddos_protection_traffic_attribute`.
+- changed(backend): Added default values to `tcp_keepalive_interval`, `tcp_keepalive_probes`, and `tcp_keepalive_time` properties.
+- removed(tls_subscriptions): Remove `force` parameter from TLS subscriptions.
+
+
+**Enhancements:**
+
+- feat(ngwaf_reports): Add Get attacks report endpoint.
+- feat(kv_store): Add `name` parameter to the List KV stores endpoint.
+- feat(historical): Add `services` parameter to the Historical Stats API endpoint.
+- feat(ddos_protection): Add PATCH endpoint in the Fastly DDoS Protection Events API allowing customers to update the DDoS rules action to `log`, `block`, `default`, or `off`.
+- feat(observability_timeseries): Add Observability Timeseries API for data visualized in the Sustainability dashboard.
+
+
+**Documentation:**
+
+- doc(backend, pool): Describe difference in behavior of `between_bytes_timeout` between
+                      Deliver and Compute services.
+- doc(ddos_protection): Update GET API docs describing that they can be accessed by any user role as long as the service belongs to the customer.
+
+
+## [v10.1.0](https://github.com/fastly/fastly-php/releases/tag/release/v10.1.0) (2025-07-07)
+
+**Bug fixes:**
+
+- fix(backend): Marked `prefer_ipv6` as not nullable, and documented that the default value differs for Delivery and Compute services.
+- fix(invitations): Marked `service_invitations.data` under relationships as nullable, and corrected model composition.
+
+
+**Enhancements:**
+
+- feat(tls_certificates): Add `allow_untrusted_root` attribute for TLS certificate creation and update endpoints
+
+
+**Documentation:**
+
+- doc: Update redirect URLs
+
+
+## [v10.0.0](https://github.com/fastly/fastly-php/releases/tag/release/v10.0.0) (2025-06-11)
+
+**Breaking Changes:**
+
+- removed(properties): Remove logging placement value `waf_debug`.
+
+
+**Bug fixes:**
+
+- fix(backend): Marked `prefer_ipv6` as nullable.
+
+
+**Enhancements:**
+
+- feat(historical): The following Next-Gen WAF metrics have been updated to include both Edge WAF and
+-                   Core WAF counts:`ngwaf_requests_total_count`, `ngwaf_requests_blocked_count`,
+
+
+**Documentation:**
+
+- doc(domain-discovery): Correct documentation of valid values of `scope` query parameter.
+- doc(observability-aggregations-for-logs): Correct documentation of valid values of `log-aggregations-filter` query
+                                            parameter.
+- doc(backend): Tweak language of `prefer_ipv6` description.
+- doc(service): Add documentation for `filter[versions.active]` query parameter when getting detailed information on
+                a specified service.
+
+
 ## [v9.0.0](https://github.com/fastly/fastly-php/releases/tag/release/v9.0.0) (2025-05-12)
 
 **Breaking Changes:**

@@ -4,7 +4,7 @@
  * 
  * This file contains the hosting purge methods
  * 
- * @since 7.4
+ * @since 8.1
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -21,7 +21,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
      *
      * This trait contains the hosting purge methods
      *
-     * @since 7.4
+     * @since 8.1
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
      *
@@ -45,7 +45,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge methods 
          * of the most common hosting environments
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -83,7 +83,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * wpengine caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -129,7 +129,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * kinsta caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -164,7 +164,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * godaddy caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -177,16 +177,19 @@ if( ! trait_exists( 'HOSTING' ) ) {
             // GoDaddy
             if( class_exists( '\WPaaS\Cache' ) ) {
 
+                // always remove the default purge action — has_ban() returns true after
+                // the first run and would silently skip all subsequent scheduled purges
+                remove_action( 'shutdown', [ '\WPaaS\Cache', 'purge' ], PHP_INT_MAX );
+
                 if ( ! \WPaaS\Cache::has_ban( ) ) {
 
-                    // purge and ban the GoDaddy Cache
-                    remove_action( 'shutdown', [ '\WPaaS\Cache', 'purge' ], PHP_INT_MAX );
+                    // set the ban action for this request's shutdown
                     add_action( 'shutdown', [ '\WPaaS\Cache', 'ban' ], PHP_INT_MAX );
 
-                    // log the purge
-                    KPCPC::write_log( "\t\tGoDaddy Cache" );
-
                 }
+
+                // log outside the has_ban() guard so it always records
+                KPCPC::write_log( "\t\tGoDaddy Cache" );
 
             }
 
@@ -198,7 +201,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * bluehost caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -227,7 +230,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * cloudways caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -258,7 +261,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * pantheon caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -287,7 +290,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * siteground caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -320,7 +323,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
                 sg_cachepress_purge_cache( );
 
                 // log the purge
-                KPCPC::wite_log( "\t\tSiteground Cache" );
+                KPCPC::write_log( "\t\tSiteground Cache" );
             }
 
         }
@@ -331,7 +334,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * runcloud caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger

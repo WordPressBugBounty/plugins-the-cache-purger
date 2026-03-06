@@ -123,11 +123,12 @@ class BackendApi
      * @param  int $version_id Integer identifying a service version. (required)
      * @param  string $address A hostname, IPv4, or IPv6 address for the backend. This is the preferred way to specify the location of your backend. (optional)
      * @param  bool $auto_loadbalance Whether or not this backend should be automatically load balanced. If true, all backends with this setting that don&#39;t have a &#x60;request_condition&#x60; will be selected based on their &#x60;weight&#x60;. (optional)
-     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
+     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, for Delivery services, the response received so far will be considered complete and the fetch will end. For Compute services, timeout expiration is treated as a failure of the backend connection, and an error is generated. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
      * @param  string $client_cert Unused. (optional)
      * @param  string $comment A freeform descriptive note. (optional)
      * @param  int $connect_timeout Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.connect_timeout&#x60;. (optional)
      * @param  int $first_byte_timeout Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.first_byte_timeout&#x60;. (optional)
+     * @param  int $fetch_timeout Maximum duration in milliseconds to wait for the entire response to be received after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.fetch_timeout&#x60;. (optional)
      * @param  string $healthcheck The name of the healthcheck to use with this backend. (optional)
      * @param  string $hostname The hostname of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
      * @param  string $ipv4 IPv4 address of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
@@ -139,10 +140,10 @@ class BackendApi
      * @param  string $name The name of the backend. (optional)
      * @param  string $override_host If set, will replace the client-supplied HTTP &#x60;Host&#x60; header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing &#x60;bereq.http.Host&#x60; in VCL. (optional)
      * @param  int $port Port on which the backend server is listening for connections from Fastly. Setting &#x60;port&#x60; to 80 or 443 will also set &#x60;use_ssl&#x60; automatically (to false and true respectively), unless explicitly overridden by setting &#x60;use_ssl&#x60; in the same request. (optional)
-     * @param  bool $prefer_ipv6 Prefer IPv6 connections for DNS hostname lookups. (optional)
+     * @param  bool $prefer_ipv6 Prefer IPv6 connections to origins for hostname backends. Default is &#39;false&#39; for Delivery services and &#39;true&#39; for Compute services. (optional)
      * @param  string $request_condition Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any &#x60;auto_loadbalance&#x60; setting. By default, the first backend added to a service is selected for all requests. (optional)
      * @param  string $share_key Value that when shared across backends will enable those backends to share the same health check. (optional)
-     * @param  string $shield Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding). (optional)
+     * @param  string $shield Identifier of the POP to use as a [shield](https://www.fastly.com/documentation/guides/getting-started/hosts/shielding/). (optional)
      * @param  string $ssl_ca_cert CA certificate attached to origin. (optional)
      * @param  string $ssl_cert_hostname Overrides &#x60;ssl_hostname&#x60;, but only for cert verification. Does not affect SNI at all. (optional)
      * @param  bool $ssl_check_cert Be strict on checking SSL certs. (optional, default to true)
@@ -152,9 +153,9 @@ class BackendApi
      * @param  string $ssl_hostname Use &#x60;ssl_cert_hostname&#x60; and &#x60;ssl_sni_hostname&#x60; to configure certificate validation. (optional)
      * @param  string $ssl_sni_hostname Overrides &#x60;ssl_hostname&#x60;, but only for SNI in the handshake. Does not affect cert validation at all. (optional)
      * @param  bool $tcp_keepalive_enable Whether to enable TCP keepalives for backend connections. Varnish defaults to using keepalives if this is unspecified. (optional)
-     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional)
-     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional)
-     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional)
+     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional, default to 10)
+     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional, default to 3)
+     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional, default to 300)
      * @param  bool $use_ssl Whether or not to require TLS for connections to this backend. (optional)
      * @param  int $weight Weight used to load balance this backend against others. May be any positive integer. If &#x60;auto_loadbalance&#x60; is true, the chance of this backend being selected is equal to its own weight over the sum of all weights for backends that have &#x60;auto_loadbalance&#x60; set to true. (optional)
      *
@@ -182,11 +183,12 @@ class BackendApi
      * @param  int $version_id Integer identifying a service version. (required)
      * @param  string $address A hostname, IPv4, or IPv6 address for the backend. This is the preferred way to specify the location of your backend. (optional)
      * @param  bool $auto_loadbalance Whether or not this backend should be automatically load balanced. If true, all backends with this setting that don&#39;t have a &#x60;request_condition&#x60; will be selected based on their &#x60;weight&#x60;. (optional)
-     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
+     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, for Delivery services, the response received so far will be considered complete and the fetch will end. For Compute services, timeout expiration is treated as a failure of the backend connection, and an error is generated. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
      * @param  string $client_cert Unused. (optional)
      * @param  string $comment A freeform descriptive note. (optional)
      * @param  int $connect_timeout Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.connect_timeout&#x60;. (optional)
      * @param  int $first_byte_timeout Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.first_byte_timeout&#x60;. (optional)
+     * @param  int $fetch_timeout Maximum duration in milliseconds to wait for the entire response to be received after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.fetch_timeout&#x60;. (optional)
      * @param  string $healthcheck The name of the healthcheck to use with this backend. (optional)
      * @param  string $hostname The hostname of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
      * @param  string $ipv4 IPv4 address of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
@@ -198,10 +200,10 @@ class BackendApi
      * @param  string $name The name of the backend. (optional)
      * @param  string $override_host If set, will replace the client-supplied HTTP &#x60;Host&#x60; header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing &#x60;bereq.http.Host&#x60; in VCL. (optional)
      * @param  int $port Port on which the backend server is listening for connections from Fastly. Setting &#x60;port&#x60; to 80 or 443 will also set &#x60;use_ssl&#x60; automatically (to false and true respectively), unless explicitly overridden by setting &#x60;use_ssl&#x60; in the same request. (optional)
-     * @param  bool $prefer_ipv6 Prefer IPv6 connections for DNS hostname lookups. (optional)
+     * @param  bool $prefer_ipv6 Prefer IPv6 connections to origins for hostname backends. Default is &#39;false&#39; for Delivery services and &#39;true&#39; for Compute services. (optional)
      * @param  string $request_condition Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any &#x60;auto_loadbalance&#x60; setting. By default, the first backend added to a service is selected for all requests. (optional)
      * @param  string $share_key Value that when shared across backends will enable those backends to share the same health check. (optional)
-     * @param  string $shield Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding). (optional)
+     * @param  string $shield Identifier of the POP to use as a [shield](https://www.fastly.com/documentation/guides/getting-started/hosts/shielding/). (optional)
      * @param  string $ssl_ca_cert CA certificate attached to origin. (optional)
      * @param  string $ssl_cert_hostname Overrides &#x60;ssl_hostname&#x60;, but only for cert verification. Does not affect SNI at all. (optional)
      * @param  bool $ssl_check_cert Be strict on checking SSL certs. (optional, default to true)
@@ -211,9 +213,9 @@ class BackendApi
      * @param  string $ssl_hostname Use &#x60;ssl_cert_hostname&#x60; and &#x60;ssl_sni_hostname&#x60; to configure certificate validation. (optional)
      * @param  string $ssl_sni_hostname Overrides &#x60;ssl_hostname&#x60;, but only for SNI in the handshake. Does not affect cert validation at all. (optional)
      * @param  bool $tcp_keepalive_enable Whether to enable TCP keepalives for backend connections. Varnish defaults to using keepalives if this is unspecified. (optional)
-     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional)
-     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional)
-     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional)
+     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional, default to 10)
+     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional, default to 3)
+     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional, default to 300)
      * @param  bool $use_ssl Whether or not to require TLS for connections to this backend. (optional)
      * @param  int $weight Weight used to load balance this backend against others. May be any positive integer. If &#x60;auto_loadbalance&#x60; is true, the chance of this backend being selected is equal to its own weight over the sum of all weights for backends that have &#x60;auto_loadbalance&#x60; set to true. (optional)
      *
@@ -329,11 +331,12 @@ class BackendApi
      * @param  int $version_id Integer identifying a service version. (required)
      * @param  string $address A hostname, IPv4, or IPv6 address for the backend. This is the preferred way to specify the location of your backend. (optional)
      * @param  bool $auto_loadbalance Whether or not this backend should be automatically load balanced. If true, all backends with this setting that don&#39;t have a &#x60;request_condition&#x60; will be selected based on their &#x60;weight&#x60;. (optional)
-     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
+     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, for Delivery services, the response received so far will be considered complete and the fetch will end. For Compute services, timeout expiration is treated as a failure of the backend connection, and an error is generated. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
      * @param  string $client_cert Unused. (optional)
      * @param  string $comment A freeform descriptive note. (optional)
      * @param  int $connect_timeout Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.connect_timeout&#x60;. (optional)
      * @param  int $first_byte_timeout Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.first_byte_timeout&#x60;. (optional)
+     * @param  int $fetch_timeout Maximum duration in milliseconds to wait for the entire response to be received after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.fetch_timeout&#x60;. (optional)
      * @param  string $healthcheck The name of the healthcheck to use with this backend. (optional)
      * @param  string $hostname The hostname of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
      * @param  string $ipv4 IPv4 address of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
@@ -345,10 +348,10 @@ class BackendApi
      * @param  string $name The name of the backend. (optional)
      * @param  string $override_host If set, will replace the client-supplied HTTP &#x60;Host&#x60; header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing &#x60;bereq.http.Host&#x60; in VCL. (optional)
      * @param  int $port Port on which the backend server is listening for connections from Fastly. Setting &#x60;port&#x60; to 80 or 443 will also set &#x60;use_ssl&#x60; automatically (to false and true respectively), unless explicitly overridden by setting &#x60;use_ssl&#x60; in the same request. (optional)
-     * @param  bool $prefer_ipv6 Prefer IPv6 connections for DNS hostname lookups. (optional)
+     * @param  bool $prefer_ipv6 Prefer IPv6 connections to origins for hostname backends. Default is &#39;false&#39; for Delivery services and &#39;true&#39; for Compute services. (optional)
      * @param  string $request_condition Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any &#x60;auto_loadbalance&#x60; setting. By default, the first backend added to a service is selected for all requests. (optional)
      * @param  string $share_key Value that when shared across backends will enable those backends to share the same health check. (optional)
-     * @param  string $shield Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding). (optional)
+     * @param  string $shield Identifier of the POP to use as a [shield](https://www.fastly.com/documentation/guides/getting-started/hosts/shielding/). (optional)
      * @param  string $ssl_ca_cert CA certificate attached to origin. (optional)
      * @param  string $ssl_cert_hostname Overrides &#x60;ssl_hostname&#x60;, but only for cert verification. Does not affect SNI at all. (optional)
      * @param  bool $ssl_check_cert Be strict on checking SSL certs. (optional, default to true)
@@ -358,9 +361,9 @@ class BackendApi
      * @param  string $ssl_hostname Use &#x60;ssl_cert_hostname&#x60; and &#x60;ssl_sni_hostname&#x60; to configure certificate validation. (optional)
      * @param  string $ssl_sni_hostname Overrides &#x60;ssl_hostname&#x60;, but only for SNI in the handshake. Does not affect cert validation at all. (optional)
      * @param  bool $tcp_keepalive_enable Whether to enable TCP keepalives for backend connections. Varnish defaults to using keepalives if this is unspecified. (optional)
-     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional)
-     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional)
-     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional)
+     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional, default to 10)
+     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional, default to 3)
+     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional, default to 300)
      * @param  bool $use_ssl Whether or not to require TLS for connections to this backend. (optional)
      * @param  int $weight Weight used to load balance this backend against others. May be any positive integer. If &#x60;auto_loadbalance&#x60; is true, the chance of this backend being selected is equal to its own weight over the sum of all weights for backends that have &#x60;auto_loadbalance&#x60; set to true. (optional)
      *
@@ -391,11 +394,12 @@ class BackendApi
      * @param  int $version_id Integer identifying a service version. (required)
      * @param  string $address A hostname, IPv4, or IPv6 address for the backend. This is the preferred way to specify the location of your backend. (optional)
      * @param  bool $auto_loadbalance Whether or not this backend should be automatically load balanced. If true, all backends with this setting that don&#39;t have a &#x60;request_condition&#x60; will be selected based on their &#x60;weight&#x60;. (optional)
-     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
+     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, for Delivery services, the response received so far will be considered complete and the fetch will end. For Compute services, timeout expiration is treated as a failure of the backend connection, and an error is generated. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
      * @param  string $client_cert Unused. (optional)
      * @param  string $comment A freeform descriptive note. (optional)
      * @param  int $connect_timeout Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.connect_timeout&#x60;. (optional)
      * @param  int $first_byte_timeout Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.first_byte_timeout&#x60;. (optional)
+     * @param  int $fetch_timeout Maximum duration in milliseconds to wait for the entire response to be received after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.fetch_timeout&#x60;. (optional)
      * @param  string $healthcheck The name of the healthcheck to use with this backend. (optional)
      * @param  string $hostname The hostname of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
      * @param  string $ipv4 IPv4 address of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
@@ -407,10 +411,10 @@ class BackendApi
      * @param  string $name The name of the backend. (optional)
      * @param  string $override_host If set, will replace the client-supplied HTTP &#x60;Host&#x60; header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing &#x60;bereq.http.Host&#x60; in VCL. (optional)
      * @param  int $port Port on which the backend server is listening for connections from Fastly. Setting &#x60;port&#x60; to 80 or 443 will also set &#x60;use_ssl&#x60; automatically (to false and true respectively), unless explicitly overridden by setting &#x60;use_ssl&#x60; in the same request. (optional)
-     * @param  bool $prefer_ipv6 Prefer IPv6 connections for DNS hostname lookups. (optional)
+     * @param  bool $prefer_ipv6 Prefer IPv6 connections to origins for hostname backends. Default is &#39;false&#39; for Delivery services and &#39;true&#39; for Compute services. (optional)
      * @param  string $request_condition Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any &#x60;auto_loadbalance&#x60; setting. By default, the first backend added to a service is selected for all requests. (optional)
      * @param  string $share_key Value that when shared across backends will enable those backends to share the same health check. (optional)
-     * @param  string $shield Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding). (optional)
+     * @param  string $shield Identifier of the POP to use as a [shield](https://www.fastly.com/documentation/guides/getting-started/hosts/shielding/). (optional)
      * @param  string $ssl_ca_cert CA certificate attached to origin. (optional)
      * @param  string $ssl_cert_hostname Overrides &#x60;ssl_hostname&#x60;, but only for cert verification. Does not affect SNI at all. (optional)
      * @param  bool $ssl_check_cert Be strict on checking SSL certs. (optional, default to true)
@@ -420,9 +424,9 @@ class BackendApi
      * @param  string $ssl_hostname Use &#x60;ssl_cert_hostname&#x60; and &#x60;ssl_sni_hostname&#x60; to configure certificate validation. (optional)
      * @param  string $ssl_sni_hostname Overrides &#x60;ssl_hostname&#x60;, but only for SNI in the handshake. Does not affect cert validation at all. (optional)
      * @param  bool $tcp_keepalive_enable Whether to enable TCP keepalives for backend connections. Varnish defaults to using keepalives if this is unspecified. (optional)
-     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional)
-     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional)
-     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional)
+     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional, default to 10)
+     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional, default to 3)
+     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional, default to 300)
      * @param  bool $use_ssl Whether or not to require TLS for connections to this backend. (optional)
      * @param  int $weight Weight used to load balance this backend against others. May be any positive integer. If &#x60;auto_loadbalance&#x60; is true, the chance of this backend being selected is equal to its own weight over the sum of all weights for backends that have &#x60;auto_loadbalance&#x60; set to true. (optional)
      *
@@ -479,11 +483,12 @@ class BackendApi
      * @param  int $version_id Integer identifying a service version. (required)
      * @param  string $address A hostname, IPv4, or IPv6 address for the backend. This is the preferred way to specify the location of your backend. (optional)
      * @param  bool $auto_loadbalance Whether or not this backend should be automatically load balanced. If true, all backends with this setting that don&#39;t have a &#x60;request_condition&#x60; will be selected based on their &#x60;weight&#x60;. (optional)
-     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
+     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, for Delivery services, the response received so far will be considered complete and the fetch will end. For Compute services, timeout expiration is treated as a failure of the backend connection, and an error is generated. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
      * @param  string $client_cert Unused. (optional)
      * @param  string $comment A freeform descriptive note. (optional)
      * @param  int $connect_timeout Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.connect_timeout&#x60;. (optional)
      * @param  int $first_byte_timeout Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.first_byte_timeout&#x60;. (optional)
+     * @param  int $fetch_timeout Maximum duration in milliseconds to wait for the entire response to be received after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.fetch_timeout&#x60;. (optional)
      * @param  string $healthcheck The name of the healthcheck to use with this backend. (optional)
      * @param  string $hostname The hostname of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
      * @param  string $ipv4 IPv4 address of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
@@ -495,10 +500,10 @@ class BackendApi
      * @param  string $name The name of the backend. (optional)
      * @param  string $override_host If set, will replace the client-supplied HTTP &#x60;Host&#x60; header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing &#x60;bereq.http.Host&#x60; in VCL. (optional)
      * @param  int $port Port on which the backend server is listening for connections from Fastly. Setting &#x60;port&#x60; to 80 or 443 will also set &#x60;use_ssl&#x60; automatically (to false and true respectively), unless explicitly overridden by setting &#x60;use_ssl&#x60; in the same request. (optional)
-     * @param  bool $prefer_ipv6 Prefer IPv6 connections for DNS hostname lookups. (optional)
+     * @param  bool $prefer_ipv6 Prefer IPv6 connections to origins for hostname backends. Default is &#39;false&#39; for Delivery services and &#39;true&#39; for Compute services. (optional)
      * @param  string $request_condition Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any &#x60;auto_loadbalance&#x60; setting. By default, the first backend added to a service is selected for all requests. (optional)
      * @param  string $share_key Value that when shared across backends will enable those backends to share the same health check. (optional)
-     * @param  string $shield Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding). (optional)
+     * @param  string $shield Identifier of the POP to use as a [shield](https://www.fastly.com/documentation/guides/getting-started/hosts/shielding/). (optional)
      * @param  string $ssl_ca_cert CA certificate attached to origin. (optional)
      * @param  string $ssl_cert_hostname Overrides &#x60;ssl_hostname&#x60;, but only for cert verification. Does not affect SNI at all. (optional)
      * @param  bool $ssl_check_cert Be strict on checking SSL certs. (optional, default to true)
@@ -508,9 +513,9 @@ class BackendApi
      * @param  string $ssl_hostname Use &#x60;ssl_cert_hostname&#x60; and &#x60;ssl_sni_hostname&#x60; to configure certificate validation. (optional)
      * @param  string $ssl_sni_hostname Overrides &#x60;ssl_hostname&#x60;, but only for SNI in the handshake. Does not affect cert validation at all. (optional)
      * @param  bool $tcp_keepalive_enable Whether to enable TCP keepalives for backend connections. Varnish defaults to using keepalives if this is unspecified. (optional)
-     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional)
-     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional)
-     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional)
+     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional, default to 10)
+     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional, default to 3)
+     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional, default to 300)
      * @param  bool $use_ssl Whether or not to require TLS for connections to this backend. (optional)
      * @param  int $weight Weight used to load balance this backend against others. May be any positive integer. If &#x60;auto_loadbalance&#x60; is true, the chance of this backend being selected is equal to its own weight over the sum of all weights for backends that have &#x60;auto_loadbalance&#x60; set to true. (optional)
      *
@@ -529,6 +534,7 @@ class BackendApi
         $comment = array_key_exists('comment', $options) ? $options['comment'] : null;
         $connect_timeout = array_key_exists('connect_timeout', $options) ? $options['connect_timeout'] : null;
         $first_byte_timeout = array_key_exists('first_byte_timeout', $options) ? $options['first_byte_timeout'] : null;
+        $fetch_timeout = array_key_exists('fetch_timeout', $options) ? $options['fetch_timeout'] : null;
         $healthcheck = array_key_exists('healthcheck', $options) ? $options['healthcheck'] : null;
         $hostname = array_key_exists('hostname', $options) ? $options['hostname'] : null;
         $ipv4 = array_key_exists('ipv4', $options) ? $options['ipv4'] : null;
@@ -553,9 +559,9 @@ class BackendApi
         $ssl_hostname = array_key_exists('ssl_hostname', $options) ? $options['ssl_hostname'] : null;
         $ssl_sni_hostname = array_key_exists('ssl_sni_hostname', $options) ? $options['ssl_sni_hostname'] : null;
         $tcp_keepalive_enable = array_key_exists('tcp_keepalive_enable', $options) ? $options['tcp_keepalive_enable'] : null;
-        $tcp_keepalive_interval = array_key_exists('tcp_keepalive_interval', $options) ? $options['tcp_keepalive_interval'] : null;
-        $tcp_keepalive_probes = array_key_exists('tcp_keepalive_probes', $options) ? $options['tcp_keepalive_probes'] : null;
-        $tcp_keepalive_time = array_key_exists('tcp_keepalive_time', $options) ? $options['tcp_keepalive_time'] : null;
+        $tcp_keepalive_interval = array_key_exists('tcp_keepalive_interval', $options) ? $options['tcp_keepalive_interval'] : 10;
+        $tcp_keepalive_probes = array_key_exists('tcp_keepalive_probes', $options) ? $options['tcp_keepalive_probes'] : 3;
+        $tcp_keepalive_time = array_key_exists('tcp_keepalive_time', $options) ? $options['tcp_keepalive_time'] : 300;
         $use_ssl = array_key_exists('use_ssl', $options) ? $options['use_ssl'] : null;
         $weight = array_key_exists('weight', $options) ? $options['weight'] : null;
 
@@ -629,6 +635,10 @@ class BackendApi
         // form params
         if ($first_byte_timeout !== null) {
             $formParams['first_byte_timeout'] = ObjectSerializer::toFormValue($first_byte_timeout);
+        }
+        // form params
+        if ($fetch_timeout !== null) {
+            $formParams['fetch_timeout'] = ObjectSerializer::toFormValue($fetch_timeout);
         }
         // form params
         if ($healthcheck !== null) {
@@ -1896,11 +1906,12 @@ class BackendApi
      * @param  string $backend_name The name of the backend. (required)
      * @param  string $address A hostname, IPv4, or IPv6 address for the backend. This is the preferred way to specify the location of your backend. (optional)
      * @param  bool $auto_loadbalance Whether or not this backend should be automatically load balanced. If true, all backends with this setting that don&#39;t have a &#x60;request_condition&#x60; will be selected based on their &#x60;weight&#x60;. (optional)
-     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
+     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, for Delivery services, the response received so far will be considered complete and the fetch will end. For Compute services, timeout expiration is treated as a failure of the backend connection, and an error is generated. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
      * @param  string $client_cert Unused. (optional)
      * @param  string $comment A freeform descriptive note. (optional)
      * @param  int $connect_timeout Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.connect_timeout&#x60;. (optional)
      * @param  int $first_byte_timeout Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.first_byte_timeout&#x60;. (optional)
+     * @param  int $fetch_timeout Maximum duration in milliseconds to wait for the entire response to be received after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.fetch_timeout&#x60;. (optional)
      * @param  string $healthcheck The name of the healthcheck to use with this backend. (optional)
      * @param  string $hostname The hostname of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
      * @param  string $ipv4 IPv4 address of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
@@ -1912,10 +1923,10 @@ class BackendApi
      * @param  string $name The name of the backend. (optional)
      * @param  string $override_host If set, will replace the client-supplied HTTP &#x60;Host&#x60; header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing &#x60;bereq.http.Host&#x60; in VCL. (optional)
      * @param  int $port Port on which the backend server is listening for connections from Fastly. Setting &#x60;port&#x60; to 80 or 443 will also set &#x60;use_ssl&#x60; automatically (to false and true respectively), unless explicitly overridden by setting &#x60;use_ssl&#x60; in the same request. (optional)
-     * @param  bool $prefer_ipv6 Prefer IPv6 connections for DNS hostname lookups. (optional)
+     * @param  bool $prefer_ipv6 Prefer IPv6 connections to origins for hostname backends. Default is &#39;false&#39; for Delivery services and &#39;true&#39; for Compute services. (optional)
      * @param  string $request_condition Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any &#x60;auto_loadbalance&#x60; setting. By default, the first backend added to a service is selected for all requests. (optional)
      * @param  string $share_key Value that when shared across backends will enable those backends to share the same health check. (optional)
-     * @param  string $shield Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding). (optional)
+     * @param  string $shield Identifier of the POP to use as a [shield](https://www.fastly.com/documentation/guides/getting-started/hosts/shielding/). (optional)
      * @param  string $ssl_ca_cert CA certificate attached to origin. (optional)
      * @param  string $ssl_cert_hostname Overrides &#x60;ssl_hostname&#x60;, but only for cert verification. Does not affect SNI at all. (optional)
      * @param  bool $ssl_check_cert Be strict on checking SSL certs. (optional, default to true)
@@ -1925,9 +1936,9 @@ class BackendApi
      * @param  string $ssl_hostname Use &#x60;ssl_cert_hostname&#x60; and &#x60;ssl_sni_hostname&#x60; to configure certificate validation. (optional)
      * @param  string $ssl_sni_hostname Overrides &#x60;ssl_hostname&#x60;, but only for SNI in the handshake. Does not affect cert validation at all. (optional)
      * @param  bool $tcp_keepalive_enable Whether to enable TCP keepalives for backend connections. Varnish defaults to using keepalives if this is unspecified. (optional)
-     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional)
-     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional)
-     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional)
+     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional, default to 10)
+     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional, default to 3)
+     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional, default to 300)
      * @param  bool $use_ssl Whether or not to require TLS for connections to this backend. (optional)
      * @param  int $weight Weight used to load balance this backend against others. May be any positive integer. If &#x60;auto_loadbalance&#x60; is true, the chance of this backend being selected is equal to its own weight over the sum of all weights for backends that have &#x60;auto_loadbalance&#x60; set to true. (optional)
      *
@@ -1956,11 +1967,12 @@ class BackendApi
      * @param  string $backend_name The name of the backend. (required)
      * @param  string $address A hostname, IPv4, or IPv6 address for the backend. This is the preferred way to specify the location of your backend. (optional)
      * @param  bool $auto_loadbalance Whether or not this backend should be automatically load balanced. If true, all backends with this setting that don&#39;t have a &#x60;request_condition&#x60; will be selected based on their &#x60;weight&#x60;. (optional)
-     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
+     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, for Delivery services, the response received so far will be considered complete and the fetch will end. For Compute services, timeout expiration is treated as a failure of the backend connection, and an error is generated. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
      * @param  string $client_cert Unused. (optional)
      * @param  string $comment A freeform descriptive note. (optional)
      * @param  int $connect_timeout Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.connect_timeout&#x60;. (optional)
      * @param  int $first_byte_timeout Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.first_byte_timeout&#x60;. (optional)
+     * @param  int $fetch_timeout Maximum duration in milliseconds to wait for the entire response to be received after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.fetch_timeout&#x60;. (optional)
      * @param  string $healthcheck The name of the healthcheck to use with this backend. (optional)
      * @param  string $hostname The hostname of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
      * @param  string $ipv4 IPv4 address of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
@@ -1972,10 +1984,10 @@ class BackendApi
      * @param  string $name The name of the backend. (optional)
      * @param  string $override_host If set, will replace the client-supplied HTTP &#x60;Host&#x60; header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing &#x60;bereq.http.Host&#x60; in VCL. (optional)
      * @param  int $port Port on which the backend server is listening for connections from Fastly. Setting &#x60;port&#x60; to 80 or 443 will also set &#x60;use_ssl&#x60; automatically (to false and true respectively), unless explicitly overridden by setting &#x60;use_ssl&#x60; in the same request. (optional)
-     * @param  bool $prefer_ipv6 Prefer IPv6 connections for DNS hostname lookups. (optional)
+     * @param  bool $prefer_ipv6 Prefer IPv6 connections to origins for hostname backends. Default is &#39;false&#39; for Delivery services and &#39;true&#39; for Compute services. (optional)
      * @param  string $request_condition Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any &#x60;auto_loadbalance&#x60; setting. By default, the first backend added to a service is selected for all requests. (optional)
      * @param  string $share_key Value that when shared across backends will enable those backends to share the same health check. (optional)
-     * @param  string $shield Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding). (optional)
+     * @param  string $shield Identifier of the POP to use as a [shield](https://www.fastly.com/documentation/guides/getting-started/hosts/shielding/). (optional)
      * @param  string $ssl_ca_cert CA certificate attached to origin. (optional)
      * @param  string $ssl_cert_hostname Overrides &#x60;ssl_hostname&#x60;, but only for cert verification. Does not affect SNI at all. (optional)
      * @param  bool $ssl_check_cert Be strict on checking SSL certs. (optional, default to true)
@@ -1985,9 +1997,9 @@ class BackendApi
      * @param  string $ssl_hostname Use &#x60;ssl_cert_hostname&#x60; and &#x60;ssl_sni_hostname&#x60; to configure certificate validation. (optional)
      * @param  string $ssl_sni_hostname Overrides &#x60;ssl_hostname&#x60;, but only for SNI in the handshake. Does not affect cert validation at all. (optional)
      * @param  bool $tcp_keepalive_enable Whether to enable TCP keepalives for backend connections. Varnish defaults to using keepalives if this is unspecified. (optional)
-     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional)
-     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional)
-     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional)
+     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional, default to 10)
+     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional, default to 3)
+     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional, default to 300)
      * @param  bool $use_ssl Whether or not to require TLS for connections to this backend. (optional)
      * @param  int $weight Weight used to load balance this backend against others. May be any positive integer. If &#x60;auto_loadbalance&#x60; is true, the chance of this backend being selected is equal to its own weight over the sum of all weights for backends that have &#x60;auto_loadbalance&#x60; set to true. (optional)
      *
@@ -2104,11 +2116,12 @@ class BackendApi
      * @param  string $backend_name The name of the backend. (required)
      * @param  string $address A hostname, IPv4, or IPv6 address for the backend. This is the preferred way to specify the location of your backend. (optional)
      * @param  bool $auto_loadbalance Whether or not this backend should be automatically load balanced. If true, all backends with this setting that don&#39;t have a &#x60;request_condition&#x60; will be selected based on their &#x60;weight&#x60;. (optional)
-     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
+     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, for Delivery services, the response received so far will be considered complete and the fetch will end. For Compute services, timeout expiration is treated as a failure of the backend connection, and an error is generated. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
      * @param  string $client_cert Unused. (optional)
      * @param  string $comment A freeform descriptive note. (optional)
      * @param  int $connect_timeout Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.connect_timeout&#x60;. (optional)
      * @param  int $first_byte_timeout Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.first_byte_timeout&#x60;. (optional)
+     * @param  int $fetch_timeout Maximum duration in milliseconds to wait for the entire response to be received after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.fetch_timeout&#x60;. (optional)
      * @param  string $healthcheck The name of the healthcheck to use with this backend. (optional)
      * @param  string $hostname The hostname of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
      * @param  string $ipv4 IPv4 address of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
@@ -2120,10 +2133,10 @@ class BackendApi
      * @param  string $name The name of the backend. (optional)
      * @param  string $override_host If set, will replace the client-supplied HTTP &#x60;Host&#x60; header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing &#x60;bereq.http.Host&#x60; in VCL. (optional)
      * @param  int $port Port on which the backend server is listening for connections from Fastly. Setting &#x60;port&#x60; to 80 or 443 will also set &#x60;use_ssl&#x60; automatically (to false and true respectively), unless explicitly overridden by setting &#x60;use_ssl&#x60; in the same request. (optional)
-     * @param  bool $prefer_ipv6 Prefer IPv6 connections for DNS hostname lookups. (optional)
+     * @param  bool $prefer_ipv6 Prefer IPv6 connections to origins for hostname backends. Default is &#39;false&#39; for Delivery services and &#39;true&#39; for Compute services. (optional)
      * @param  string $request_condition Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any &#x60;auto_loadbalance&#x60; setting. By default, the first backend added to a service is selected for all requests. (optional)
      * @param  string $share_key Value that when shared across backends will enable those backends to share the same health check. (optional)
-     * @param  string $shield Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding). (optional)
+     * @param  string $shield Identifier of the POP to use as a [shield](https://www.fastly.com/documentation/guides/getting-started/hosts/shielding/). (optional)
      * @param  string $ssl_ca_cert CA certificate attached to origin. (optional)
      * @param  string $ssl_cert_hostname Overrides &#x60;ssl_hostname&#x60;, but only for cert verification. Does not affect SNI at all. (optional)
      * @param  bool $ssl_check_cert Be strict on checking SSL certs. (optional, default to true)
@@ -2133,9 +2146,9 @@ class BackendApi
      * @param  string $ssl_hostname Use &#x60;ssl_cert_hostname&#x60; and &#x60;ssl_sni_hostname&#x60; to configure certificate validation. (optional)
      * @param  string $ssl_sni_hostname Overrides &#x60;ssl_hostname&#x60;, but only for SNI in the handshake. Does not affect cert validation at all. (optional)
      * @param  bool $tcp_keepalive_enable Whether to enable TCP keepalives for backend connections. Varnish defaults to using keepalives if this is unspecified. (optional)
-     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional)
-     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional)
-     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional)
+     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional, default to 10)
+     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional, default to 3)
+     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional, default to 300)
      * @param  bool $use_ssl Whether or not to require TLS for connections to this backend. (optional)
      * @param  int $weight Weight used to load balance this backend against others. May be any positive integer. If &#x60;auto_loadbalance&#x60; is true, the chance of this backend being selected is equal to its own weight over the sum of all weights for backends that have &#x60;auto_loadbalance&#x60; set to true. (optional)
      *
@@ -2167,11 +2180,12 @@ class BackendApi
      * @param  string $backend_name The name of the backend. (required)
      * @param  string $address A hostname, IPv4, or IPv6 address for the backend. This is the preferred way to specify the location of your backend. (optional)
      * @param  bool $auto_loadbalance Whether or not this backend should be automatically load balanced. If true, all backends with this setting that don&#39;t have a &#x60;request_condition&#x60; will be selected based on their &#x60;weight&#x60;. (optional)
-     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
+     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, for Delivery services, the response received so far will be considered complete and the fetch will end. For Compute services, timeout expiration is treated as a failure of the backend connection, and an error is generated. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
      * @param  string $client_cert Unused. (optional)
      * @param  string $comment A freeform descriptive note. (optional)
      * @param  int $connect_timeout Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.connect_timeout&#x60;. (optional)
      * @param  int $first_byte_timeout Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.first_byte_timeout&#x60;. (optional)
+     * @param  int $fetch_timeout Maximum duration in milliseconds to wait for the entire response to be received after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.fetch_timeout&#x60;. (optional)
      * @param  string $healthcheck The name of the healthcheck to use with this backend. (optional)
      * @param  string $hostname The hostname of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
      * @param  string $ipv4 IPv4 address of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
@@ -2183,10 +2197,10 @@ class BackendApi
      * @param  string $name The name of the backend. (optional)
      * @param  string $override_host If set, will replace the client-supplied HTTP &#x60;Host&#x60; header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing &#x60;bereq.http.Host&#x60; in VCL. (optional)
      * @param  int $port Port on which the backend server is listening for connections from Fastly. Setting &#x60;port&#x60; to 80 or 443 will also set &#x60;use_ssl&#x60; automatically (to false and true respectively), unless explicitly overridden by setting &#x60;use_ssl&#x60; in the same request. (optional)
-     * @param  bool $prefer_ipv6 Prefer IPv6 connections for DNS hostname lookups. (optional)
+     * @param  bool $prefer_ipv6 Prefer IPv6 connections to origins for hostname backends. Default is &#39;false&#39; for Delivery services and &#39;true&#39; for Compute services. (optional)
      * @param  string $request_condition Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any &#x60;auto_loadbalance&#x60; setting. By default, the first backend added to a service is selected for all requests. (optional)
      * @param  string $share_key Value that when shared across backends will enable those backends to share the same health check. (optional)
-     * @param  string $shield Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding). (optional)
+     * @param  string $shield Identifier of the POP to use as a [shield](https://www.fastly.com/documentation/guides/getting-started/hosts/shielding/). (optional)
      * @param  string $ssl_ca_cert CA certificate attached to origin. (optional)
      * @param  string $ssl_cert_hostname Overrides &#x60;ssl_hostname&#x60;, but only for cert verification. Does not affect SNI at all. (optional)
      * @param  bool $ssl_check_cert Be strict on checking SSL certs. (optional, default to true)
@@ -2196,9 +2210,9 @@ class BackendApi
      * @param  string $ssl_hostname Use &#x60;ssl_cert_hostname&#x60; and &#x60;ssl_sni_hostname&#x60; to configure certificate validation. (optional)
      * @param  string $ssl_sni_hostname Overrides &#x60;ssl_hostname&#x60;, but only for SNI in the handshake. Does not affect cert validation at all. (optional)
      * @param  bool $tcp_keepalive_enable Whether to enable TCP keepalives for backend connections. Varnish defaults to using keepalives if this is unspecified. (optional)
-     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional)
-     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional)
-     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional)
+     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional, default to 10)
+     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional, default to 3)
+     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional, default to 300)
      * @param  bool $use_ssl Whether or not to require TLS for connections to this backend. (optional)
      * @param  int $weight Weight used to load balance this backend against others. May be any positive integer. If &#x60;auto_loadbalance&#x60; is true, the chance of this backend being selected is equal to its own weight over the sum of all weights for backends that have &#x60;auto_loadbalance&#x60; set to true. (optional)
      *
@@ -2256,11 +2270,12 @@ class BackendApi
      * @param  string $backend_name The name of the backend. (required)
      * @param  string $address A hostname, IPv4, or IPv6 address for the backend. This is the preferred way to specify the location of your backend. (optional)
      * @param  bool $auto_loadbalance Whether or not this backend should be automatically load balanced. If true, all backends with this setting that don&#39;t have a &#x60;request_condition&#x60; will be selected based on their &#x60;weight&#x60;. (optional)
-     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
+     * @param  int $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, for Delivery services, the response received so far will be considered complete and the fetch will end. For Compute services, timeout expiration is treated as a failure of the backend connection, and an error is generated. May be set at runtime using &#x60;bereq.between_bytes_timeout&#x60;. (optional)
      * @param  string $client_cert Unused. (optional)
      * @param  string $comment A freeform descriptive note. (optional)
      * @param  int $connect_timeout Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.connect_timeout&#x60;. (optional)
      * @param  int $first_byte_timeout Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.first_byte_timeout&#x60;. (optional)
+     * @param  int $fetch_timeout Maximum duration in milliseconds to wait for the entire response to be received after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic &#x60;503&#x60; response will be presented instead. May be set at runtime using &#x60;bereq.fetch_timeout&#x60;. (optional)
      * @param  string $healthcheck The name of the healthcheck to use with this backend. (optional)
      * @param  string $hostname The hostname of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
      * @param  string $ipv4 IPv4 address of the backend. May be used as an alternative to &#x60;address&#x60; to set the backend location. (optional)
@@ -2272,10 +2287,10 @@ class BackendApi
      * @param  string $name The name of the backend. (optional)
      * @param  string $override_host If set, will replace the client-supplied HTTP &#x60;Host&#x60; header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing &#x60;bereq.http.Host&#x60; in VCL. (optional)
      * @param  int $port Port on which the backend server is listening for connections from Fastly. Setting &#x60;port&#x60; to 80 or 443 will also set &#x60;use_ssl&#x60; automatically (to false and true respectively), unless explicitly overridden by setting &#x60;use_ssl&#x60; in the same request. (optional)
-     * @param  bool $prefer_ipv6 Prefer IPv6 connections for DNS hostname lookups. (optional)
+     * @param  bool $prefer_ipv6 Prefer IPv6 connections to origins for hostname backends. Default is &#39;false&#39; for Delivery services and &#39;true&#39; for Compute services. (optional)
      * @param  string $request_condition Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any &#x60;auto_loadbalance&#x60; setting. By default, the first backend added to a service is selected for all requests. (optional)
      * @param  string $share_key Value that when shared across backends will enable those backends to share the same health check. (optional)
-     * @param  string $shield Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding). (optional)
+     * @param  string $shield Identifier of the POP to use as a [shield](https://www.fastly.com/documentation/guides/getting-started/hosts/shielding/). (optional)
      * @param  string $ssl_ca_cert CA certificate attached to origin. (optional)
      * @param  string $ssl_cert_hostname Overrides &#x60;ssl_hostname&#x60;, but only for cert verification. Does not affect SNI at all. (optional)
      * @param  bool $ssl_check_cert Be strict on checking SSL certs. (optional, default to true)
@@ -2285,9 +2300,9 @@ class BackendApi
      * @param  string $ssl_hostname Use &#x60;ssl_cert_hostname&#x60; and &#x60;ssl_sni_hostname&#x60; to configure certificate validation. (optional)
      * @param  string $ssl_sni_hostname Overrides &#x60;ssl_hostname&#x60;, but only for SNI in the handshake. Does not affect cert validation at all. (optional)
      * @param  bool $tcp_keepalive_enable Whether to enable TCP keepalives for backend connections. Varnish defaults to using keepalives if this is unspecified. (optional)
-     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional)
-     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional)
-     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional)
+     * @param  int $tcp_keepalive_interval Interval in seconds between subsequent keepalive probes. (optional, default to 10)
+     * @param  int $tcp_keepalive_probes Number of unacknowledged probes to send before considering the connection dead. (optional, default to 3)
+     * @param  int $tcp_keepalive_time Interval in seconds between the last data packet sent and the first keepalive probe. (optional, default to 300)
      * @param  bool $use_ssl Whether or not to require TLS for connections to this backend. (optional)
      * @param  int $weight Weight used to load balance this backend against others. May be any positive integer. If &#x60;auto_loadbalance&#x60; is true, the chance of this backend being selected is equal to its own weight over the sum of all weights for backends that have &#x60;auto_loadbalance&#x60; set to true. (optional)
      *
@@ -2307,6 +2322,7 @@ class BackendApi
         $comment = array_key_exists('comment', $options) ? $options['comment'] : null;
         $connect_timeout = array_key_exists('connect_timeout', $options) ? $options['connect_timeout'] : null;
         $first_byte_timeout = array_key_exists('first_byte_timeout', $options) ? $options['first_byte_timeout'] : null;
+        $fetch_timeout = array_key_exists('fetch_timeout', $options) ? $options['fetch_timeout'] : null;
         $healthcheck = array_key_exists('healthcheck', $options) ? $options['healthcheck'] : null;
         $hostname = array_key_exists('hostname', $options) ? $options['hostname'] : null;
         $ipv4 = array_key_exists('ipv4', $options) ? $options['ipv4'] : null;
@@ -2331,9 +2347,9 @@ class BackendApi
         $ssl_hostname = array_key_exists('ssl_hostname', $options) ? $options['ssl_hostname'] : null;
         $ssl_sni_hostname = array_key_exists('ssl_sni_hostname', $options) ? $options['ssl_sni_hostname'] : null;
         $tcp_keepalive_enable = array_key_exists('tcp_keepalive_enable', $options) ? $options['tcp_keepalive_enable'] : null;
-        $tcp_keepalive_interval = array_key_exists('tcp_keepalive_interval', $options) ? $options['tcp_keepalive_interval'] : null;
-        $tcp_keepalive_probes = array_key_exists('tcp_keepalive_probes', $options) ? $options['tcp_keepalive_probes'] : null;
-        $tcp_keepalive_time = array_key_exists('tcp_keepalive_time', $options) ? $options['tcp_keepalive_time'] : null;
+        $tcp_keepalive_interval = array_key_exists('tcp_keepalive_interval', $options) ? $options['tcp_keepalive_interval'] : 10;
+        $tcp_keepalive_probes = array_key_exists('tcp_keepalive_probes', $options) ? $options['tcp_keepalive_probes'] : 3;
+        $tcp_keepalive_time = array_key_exists('tcp_keepalive_time', $options) ? $options['tcp_keepalive_time'] : 300;
         $use_ssl = array_key_exists('use_ssl', $options) ? $options['use_ssl'] : null;
         $weight = array_key_exists('weight', $options) ? $options['weight'] : null;
 
@@ -2421,6 +2437,10 @@ class BackendApi
         // form params
         if ($first_byte_timeout !== null) {
             $formParams['first_byte_timeout'] = ObjectSerializer::toFormValue($first_byte_timeout);
+        }
+        // form params
+        if ($fetch_timeout !== null) {
+            $formParams['fetch_timeout'] = ObjectSerializer::toFormValue($fetch_timeout);
         }
         // form params
         if ($healthcheck !== null) {

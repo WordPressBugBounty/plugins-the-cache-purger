@@ -107,6 +107,17 @@ Class | Method | Description
 [*ApexRedirectApi*](docs/Api/ApexRedirectApi.md) | [**getApexRedirect**](docs/Api/ApexRedirectApi.md#getapexredirect) | Get an apex redirect
 [*ApexRedirectApi*](docs/Api/ApexRedirectApi.md) | [**listApexRedirects**](docs/Api/ApexRedirectApi.md#listapexredirects) | List apex redirects
 [*ApexRedirectApi*](docs/Api/ApexRedirectApi.md) | [**updateApexRedirect**](docs/Api/ApexRedirectApi.md#updateapexredirect) | Update an apex redirect
+[*ApisecurityOperationsApi*](docs/Api/ApisecurityOperationsApi.md) | [**apiSecurityCreateOperation**](docs/Api/ApisecurityOperationsApi.md#apisecuritycreateoperation) | Create operation
+[*ApisecurityOperationsApi*](docs/Api/ApisecurityOperationsApi.md) | [**apiSecurityCreateOperationTag**](docs/Api/ApisecurityOperationsApi.md#apisecuritycreateoperationtag) | Create operation tag
+[*ApisecurityOperationsApi*](docs/Api/ApisecurityOperationsApi.md) | [**apiSecurityDeleteOperation**](docs/Api/ApisecurityOperationsApi.md#apisecuritydeleteoperation) | Delete operation
+[*ApisecurityOperationsApi*](docs/Api/ApisecurityOperationsApi.md) | [**apiSecurityDeleteOperationTag**](docs/Api/ApisecurityOperationsApi.md#apisecuritydeleteoperationtag) | Delete operation tag
+[*ApisecurityOperationsApi*](docs/Api/ApisecurityOperationsApi.md) | [**apiSecurityGetOperation**](docs/Api/ApisecurityOperationsApi.md#apisecuritygetoperation) | Retrieve operation
+[*ApisecurityOperationsApi*](docs/Api/ApisecurityOperationsApi.md) | [**apiSecurityGetOperationTag**](docs/Api/ApisecurityOperationsApi.md#apisecuritygetoperationtag) | Retrieve operation tag
+[*ApisecurityOperationsApi*](docs/Api/ApisecurityOperationsApi.md) | [**apiSecurityListDiscoveredOperations**](docs/Api/ApisecurityOperationsApi.md#apisecuritylistdiscoveredoperations) | List discovered operations
+[*ApisecurityOperationsApi*](docs/Api/ApisecurityOperationsApi.md) | [**apiSecurityListOperationTags**](docs/Api/ApisecurityOperationsApi.md#apisecuritylistoperationtags) | List operation tags
+[*ApisecurityOperationsApi*](docs/Api/ApisecurityOperationsApi.md) | [**apiSecurityListOperations**](docs/Api/ApisecurityOperationsApi.md#apisecuritylistoperations) | List operations
+[*ApisecurityOperationsApi*](docs/Api/ApisecurityOperationsApi.md) | [**apiSecurityUpdateOperation**](docs/Api/ApisecurityOperationsApi.md#apisecurityupdateoperation) | Update operation
+[*ApisecurityOperationsApi*](docs/Api/ApisecurityOperationsApi.md) | [**apiSecurityUpdateOperationTag**](docs/Api/ApisecurityOperationsApi.md#apisecurityupdateoperationtag) | Update operation tag
 [*AutomationTokensApi*](docs/Api/AutomationTokensApi.md) | [**createAutomationToken**](docs/Api/AutomationTokensApi.md#createautomationtoken) | Create Automation Token
 [*AutomationTokensApi*](docs/Api/AutomationTokensApi.md) | [**getAutomationTokenId**](docs/Api/AutomationTokensApi.md#getautomationtokenid) | Retrieve an Automation Token by ID
 [*AutomationTokensApi*](docs/Api/AutomationTokensApi.md) | [**getAutomationTokensIdServices**](docs/Api/AutomationTokensApi.md#getautomationtokensidservices) | List Automation Token Services
@@ -166,6 +177,7 @@ Class | Method | Description
 [*DdosProtectionApi*](docs/Api/DdosProtectionApi.md) | [**ddosProtectionEventList**](docs/Api/DdosProtectionApi.md#ddosprotectioneventlist) | Get events
 [*DdosProtectionApi*](docs/Api/DdosProtectionApi.md) | [**ddosProtectionEventRuleList**](docs/Api/DdosProtectionApi.md#ddosprotectioneventrulelist) | Get all rules for an event
 [*DdosProtectionApi*](docs/Api/DdosProtectionApi.md) | [**ddosProtectionRuleGet**](docs/Api/DdosProtectionApi.md#ddosprotectionruleget) | Get a rule by ID
+[*DdosProtectionApi*](docs/Api/DdosProtectionApi.md) | [**ddosProtectionRulePatch**](docs/Api/DdosProtectionApi.md#ddosprotectionrulepatch) | Update rule
 [*DdosProtectionApi*](docs/Api/DdosProtectionApi.md) | [**ddosProtectionTrafficStatsRuleGet**](docs/Api/DdosProtectionApi.md#ddosprotectiontrafficstatsruleget) | Get traffic stats for a rule
 [*DictionaryApi*](docs/Api/DictionaryApi.md) | [**createDictionary**](docs/Api/DictionaryApi.md#createdictionary) | Create a dictionary
 [*DictionaryApi*](docs/Api/DictionaryApi.md) | [**deleteDictionary**](docs/Api/DictionaryApi.md#deletedictionary) | Delete a dictionary
@@ -189,6 +201,11 @@ Class | Method | Description
 [*DirectorBackendApi*](docs/Api/DirectorBackendApi.md) | [**createDirectorBackend**](docs/Api/DirectorBackendApi.md#createdirectorbackend) | Create a director-backend relationship
 [*DirectorBackendApi*](docs/Api/DirectorBackendApi.md) | [**deleteDirectorBackend**](docs/Api/DirectorBackendApi.md#deletedirectorbackend) | Delete a director-backend relationship
 [*DirectorBackendApi*](docs/Api/DirectorBackendApi.md) | [**getDirectorBackend**](docs/Api/DirectorBackendApi.md#getdirectorbackend) | Get a director-backend relationship
+[*DmDomainsApi*](docs/Api/DmDomainsApi.md) | [**createDmDomain**](docs/Api/DmDomainsApi.md#createdmdomain) | Create a domain
+[*DmDomainsApi*](docs/Api/DmDomainsApi.md) | [**deleteDmDomain**](docs/Api/DmDomainsApi.md#deletedmdomain) | Delete a domain
+[*DmDomainsApi*](docs/Api/DmDomainsApi.md) | [**getDmDomain**](docs/Api/DmDomainsApi.md#getdmdomain) | Get a domain
+[*DmDomainsApi*](docs/Api/DmDomainsApi.md) | [**listDmDomains**](docs/Api/DmDomainsApi.md#listdmdomains) | List domains
+[*DmDomainsApi*](docs/Api/DmDomainsApi.md) | [**updateDmDomain**](docs/Api/DmDomainsApi.md#updatedmdomain) | Update a domain
 [*DomainApi*](docs/Api/DomainApi.md) | [**checkDomain**](docs/Api/DomainApi.md#checkdomain) | Validate DNS configuration for a single domain on a service
 [*DomainApi*](docs/Api/DomainApi.md) | [**checkDomains**](docs/Api/DomainApi.md#checkdomains) | Validate DNS configuration for all domains on a service
 [*DomainApi*](docs/Api/DomainApi.md) | [**createDomain**](docs/Api/DomainApi.md#createdomain) | Add a domain name to a service
@@ -201,6 +218,8 @@ Class | Method | Description
 [*DomainInspectorRealtimeApi*](docs/Api/DomainInspectorRealtimeApi.md) | [**getDomainInspectorLastMaxEntries**](docs/Api/DomainInspectorRealtimeApi.md#getdomaininspectorlastmaxentries) | Get a limited number of real-time domain data entries
 [*DomainInspectorRealtimeApi*](docs/Api/DomainInspectorRealtimeApi.md) | [**getDomainInspectorLastSecond**](docs/Api/DomainInspectorRealtimeApi.md#getdomaininspectorlastsecond) | Get real-time domain data from a specified time
 [*DomainOwnershipsApi*](docs/Api/DomainOwnershipsApi.md) | [**listDomainOwnerships**](docs/Api/DomainOwnershipsApi.md#listdomainownerships) | List domain-ownerships
+[*DomainResearchApi*](docs/Api/DomainResearchApi.md) | [**domainStatus**](docs/Api/DomainResearchApi.md#domainstatus) | Domain status
+[*DomainResearchApi*](docs/Api/DomainResearchApi.md) | [**suggestDomains**](docs/Api/DomainResearchApi.md#suggestdomains) | Suggest domains
 [*EventsApi*](docs/Api/EventsApi.md) | [**getEvent**](docs/Api/EventsApi.md#getevent) | Get an event
 [*EventsApi*](docs/Api/EventsApi.md) | [**listEvents**](docs/Api/EventsApi.md#listevents) | List events
 [*GzipApi*](docs/Api/GzipApi.md) | [**createGzipConfig**](docs/Api/GzipApi.md#creategzipconfig) | Create a gzip configuration
@@ -231,14 +250,8 @@ Class | Method | Description
 [*Http3Api*](docs/Api/Http3Api.md) | [**deleteHttp3**](docs/Api/Http3Api.md#deletehttp3) | Disable support for HTTP/3
 [*Http3Api*](docs/Api/Http3Api.md) | [**getHttp3**](docs/Api/Http3Api.md#gethttp3) | Get HTTP/3 status
 [*IamPermissionsApi*](docs/Api/IamPermissionsApi.md) | [**listPermissions**](docs/Api/IamPermissionsApi.md#listpermissions) | List permissions
-[*IamRolesApi*](docs/Api/IamRolesApi.md) | [**addRolePermissions**](docs/Api/IamRolesApi.md#addrolepermissions) | Add permissions to a role
-[*IamRolesApi*](docs/Api/IamRolesApi.md) | [**createARole**](docs/Api/IamRolesApi.md#createarole) | Create a role
-[*IamRolesApi*](docs/Api/IamRolesApi.md) | [**deleteARole**](docs/Api/IamRolesApi.md#deletearole) | Delete a role
-[*IamRolesApi*](docs/Api/IamRolesApi.md) | [**getARole**](docs/Api/IamRolesApi.md#getarole) | Get a role
-[*IamRolesApi*](docs/Api/IamRolesApi.md) | [**listRolePermissions**](docs/Api/IamRolesApi.md#listrolepermissions) | List permissions in a role
-[*IamRolesApi*](docs/Api/IamRolesApi.md) | [**listRoles**](docs/Api/IamRolesApi.md#listroles) | List roles
-[*IamRolesApi*](docs/Api/IamRolesApi.md) | [**removeRolePermissions**](docs/Api/IamRolesApi.md#removerolepermissions) | Remove permissions from a role
-[*IamRolesApi*](docs/Api/IamRolesApi.md) | [**updateARole**](docs/Api/IamRolesApi.md#updatearole) | Update a role
+[*IamRolesApi*](docs/Api/IamRolesApi.md) | [**iamV1RolesGet**](docs/Api/IamRolesApi.md#iamv1rolesget) | Get IAM role by ID
+[*IamRolesApi*](docs/Api/IamRolesApi.md) | [**iamV1RolesList**](docs/Api/IamRolesApi.md#iamv1roleslist) | List IAM roles
 [*IamServiceGroupsApi*](docs/Api/IamServiceGroupsApi.md) | [**addServiceGroupServices**](docs/Api/IamServiceGroupsApi.md#addservicegroupservices) | Add services in a service group
 [*IamServiceGroupsApi*](docs/Api/IamServiceGroupsApi.md) | [**createAServiceGroup**](docs/Api/IamServiceGroupsApi.md#createaservicegroup) | Create a service group
 [*IamServiceGroupsApi*](docs/Api/IamServiceGroupsApi.md) | [**deleteAServiceGroup**](docs/Api/IamServiceGroupsApi.md#deleteaservicegroup) | Delete a service group
@@ -271,6 +284,7 @@ Class | Method | Description
 [*KvStoreApi*](docs/Api/KvStoreApi.md) | [**kvStoreDelete**](docs/Api/KvStoreApi.md#kvstoredelete) | Delete a KV store.
 [*KvStoreApi*](docs/Api/KvStoreApi.md) | [**kvStoreGet**](docs/Api/KvStoreApi.md#kvstoreget) | Describe a KV store.
 [*KvStoreApi*](docs/Api/KvStoreApi.md) | [**kvStoreList**](docs/Api/KvStoreApi.md#kvstorelist) | List all KV stores.
+[*KvStoreApi*](docs/Api/KvStoreApi.md) | [**kvStorePut**](docs/Api/KvStoreApi.md#kvstoreput) | Update a KV store.
 [*KvStoreItemApi*](docs/Api/KvStoreItemApi.md) | [**kvStoreDeleteItem**](docs/Api/KvStoreItemApi.md#kvstoredeleteitem) | Delete an item.
 [*KvStoreItemApi*](docs/Api/KvStoreItemApi.md) | [**kvStoreGetItem**](docs/Api/KvStoreItemApi.md#kvstoregetitem) | Get an item.
 [*KvStoreItemApi*](docs/Api/KvStoreItemApi.md) | [**kvStoreListItemKeys**](docs/Api/KvStoreItemApi.md#kvstorelistitemkeys) | List item keys.
@@ -416,11 +430,14 @@ Class | Method | Description
 [*LoggingSyslogApi*](docs/Api/LoggingSyslogApi.md) | [**getLogSyslog**](docs/Api/LoggingSyslogApi.md#getlogsyslog) | Get a syslog log endpoint
 [*LoggingSyslogApi*](docs/Api/LoggingSyslogApi.md) | [**listLogSyslog**](docs/Api/LoggingSyslogApi.md#listlogsyslog) | List Syslog log endpoints
 [*LoggingSyslogApi*](docs/Api/LoggingSyslogApi.md) | [**updateLogSyslog**](docs/Api/LoggingSyslogApi.md#updatelogsyslog) | Update a syslog log endpoint
+[*MetricsPlatformApi*](docs/Api/MetricsPlatformApi.md) | [**getPlatformMetricsServiceHistorical**](docs/Api/MetricsPlatformApi.md#getplatformmetricsservicehistorical) | Get historical time series metrics for a single service
 [*MutualAuthenticationApi*](docs/Api/MutualAuthenticationApi.md) | [**createMutualTlsAuthentication**](docs/Api/MutualAuthenticationApi.md#createmutualtlsauthentication) | Create a Mutual Authentication
 [*MutualAuthenticationApi*](docs/Api/MutualAuthenticationApi.md) | [**deleteMutualTls**](docs/Api/MutualAuthenticationApi.md#deletemutualtls) | Delete a Mutual TLS
 [*MutualAuthenticationApi*](docs/Api/MutualAuthenticationApi.md) | [**getMutualAuthentication**](docs/Api/MutualAuthenticationApi.md#getmutualauthentication) | Get a Mutual Authentication
 [*MutualAuthenticationApi*](docs/Api/MutualAuthenticationApi.md) | [**listMutualAuthentications**](docs/Api/MutualAuthenticationApi.md#listmutualauthentications) | List Mutual Authentications
 [*MutualAuthenticationApi*](docs/Api/MutualAuthenticationApi.md) | [**patchMutualAuthentication**](docs/Api/MutualAuthenticationApi.md#patchmutualauthentication) | Update a Mutual Authentication
+[*NgwafReportsApi*](docs/Api/NgwafReportsApi.md) | [**getAttacksReport**](docs/Api/NgwafReportsApi.md#getattacksreport) | Get attacks report
+[*NgwafReportsApi*](docs/Api/NgwafReportsApi.md) | [**getSignalsReport**](docs/Api/NgwafReportsApi.md#getsignalsreport) | Get signals report
 [*ObjectStorageAccessKeysApi*](docs/Api/ObjectStorageAccessKeysApi.md) | [**createAccessKey**](docs/Api/ObjectStorageAccessKeysApi.md#createaccesskey) | Create an access key
 [*ObjectStorageAccessKeysApi*](docs/Api/ObjectStorageAccessKeysApi.md) | [**deleteAccessKey**](docs/Api/ObjectStorageAccessKeysApi.md#deleteaccesskey) | Delete an access key
 [*ObjectStorageAccessKeysApi*](docs/Api/ObjectStorageAccessKeysApi.md) | [**getAccessKey**](docs/Api/ObjectStorageAccessKeysApi.md#getaccesskey) | Get an access key
@@ -431,7 +448,7 @@ Class | Method | Description
 [*ObservabilityCustomDashboardsApi*](docs/Api/ObservabilityCustomDashboardsApi.md) | [**getDashboard**](docs/Api/ObservabilityCustomDashboardsApi.md#getdashboard) | Retrieve a dashboard by ID
 [*ObservabilityCustomDashboardsApi*](docs/Api/ObservabilityCustomDashboardsApi.md) | [**listDashboards**](docs/Api/ObservabilityCustomDashboardsApi.md#listdashboards) | List all custom dashboards
 [*ObservabilityCustomDashboardsApi*](docs/Api/ObservabilityCustomDashboardsApi.md) | [**updateDashboard**](docs/Api/ObservabilityCustomDashboardsApi.md#updatedashboard) | Update an existing dashboard
-[*ObservabilityTimeseriesForLogsApi*](docs/Api/ObservabilityTimeseriesForLogsApi.md) | [**logTimeseriesGet**](docs/Api/ObservabilityTimeseriesForLogsApi.md#logtimeseriesget) | Retrieve log data as time series
+[*ObservabilityTimeseriesApi*](docs/Api/ObservabilityTimeseriesApi.md) | [**timeseriesGet**](docs/Api/ObservabilityTimeseriesApi.md#timeseriesget) | Retrieve observability data as a time series
 [*OriginInspectorHistoricalApi*](docs/Api/OriginInspectorHistoricalApi.md) | [**getOriginInspectorHistorical**](docs/Api/OriginInspectorHistoricalApi.md#getorigininspectorhistorical) | Get historical origin data for a service
 [*OriginInspectorRealtimeApi*](docs/Api/OriginInspectorRealtimeApi.md) | [**getOriginInspectorLast120Seconds**](docs/Api/OriginInspectorRealtimeApi.md#getorigininspectorlast120seconds) | Get real-time origin data for the last 120 seconds
 [*OriginInspectorRealtimeApi*](docs/Api/OriginInspectorRealtimeApi.md) | [**getOriginInspectorLastMaxEntries**](docs/Api/OriginInspectorRealtimeApi.md#getorigininspectorlastmaxentries) | Get a limited number of real-time origin data entries
@@ -447,6 +464,10 @@ Class | Method | Description
 [*ProductAiAcceleratorApi*](docs/Api/ProductAiAcceleratorApi.md) | [**disableProductAiAccelerator**](docs/Api/ProductAiAcceleratorApi.md#disableproductaiaccelerator) | Disable product
 [*ProductAiAcceleratorApi*](docs/Api/ProductAiAcceleratorApi.md) | [**enableAiAccelerator**](docs/Api/ProductAiAcceleratorApi.md#enableaiaccelerator) | Enable product
 [*ProductAiAcceleratorApi*](docs/Api/ProductAiAcceleratorApi.md) | [**getAiAccelerator**](docs/Api/ProductAiAcceleratorApi.md#getaiaccelerator) | Get product enablement status
+[*ProductApiDiscoveryApi*](docs/Api/ProductApiDiscoveryApi.md) | [**disableProductApiDiscovery**](docs/Api/ProductApiDiscoveryApi.md#disableproductapidiscovery) | Disable product
+[*ProductApiDiscoveryApi*](docs/Api/ProductApiDiscoveryApi.md) | [**enableProductApiDiscovery**](docs/Api/ProductApiDiscoveryApi.md#enableproductapidiscovery) | Enable product
+[*ProductApiDiscoveryApi*](docs/Api/ProductApiDiscoveryApi.md) | [**getProductApiDiscovery**](docs/Api/ProductApiDiscoveryApi.md#getproductapidiscovery) | Get product enablement status
+[*ProductApiDiscoveryApi*](docs/Api/ProductApiDiscoveryApi.md) | [**getServicesProductApiDiscovery**](docs/Api/ProductApiDiscoveryApi.md#getservicesproductapidiscovery) | Get services with product enabled
 [*ProductBotManagementApi*](docs/Api/ProductBotManagementApi.md) | [**disableProductBotManagement**](docs/Api/ProductBotManagementApi.md#disableproductbotmanagement) | Disable product
 [*ProductBotManagementApi*](docs/Api/ProductBotManagementApi.md) | [**enableProductBotManagement**](docs/Api/ProductBotManagementApi.md#enableproductbotmanagement) | Enable product
 [*ProductBotManagementApi*](docs/Api/ProductBotManagementApi.md) | [**getProductBotManagement**](docs/Api/ProductBotManagementApi.md#getproductbotmanagement) | Get product enablement status
@@ -465,6 +486,9 @@ Class | Method | Description
 [*ProductDomainInspectorApi*](docs/Api/ProductDomainInspectorApi.md) | [**enableProductDomainInspector**](docs/Api/ProductDomainInspectorApi.md#enableproductdomaininspector) | Enable product
 [*ProductDomainInspectorApi*](docs/Api/ProductDomainInspectorApi.md) | [**getProductDomainInspector**](docs/Api/ProductDomainInspectorApi.md#getproductdomaininspector) | Get product enablement status
 [*ProductDomainInspectorApi*](docs/Api/ProductDomainInspectorApi.md) | [**getServicesProductDomainInspector**](docs/Api/ProductDomainInspectorApi.md#getservicesproductdomaininspector) | Get services with product enabled
+[*ProductDomainResearchApi*](docs/Api/ProductDomainResearchApi.md) | [**disableProductDomainResearch**](docs/Api/ProductDomainResearchApi.md#disableproductdomainresearch) | Disable product
+[*ProductDomainResearchApi*](docs/Api/ProductDomainResearchApi.md) | [**enableDomainResearch**](docs/Api/ProductDomainResearchApi.md#enabledomainresearch) | Enable product
+[*ProductDomainResearchApi*](docs/Api/ProductDomainResearchApi.md) | [**getDomainResearch**](docs/Api/ProductDomainResearchApi.md#getdomainresearch) | Get product enablement status
 [*ProductFanoutApi*](docs/Api/ProductFanoutApi.md) | [**disableProductFanout**](docs/Api/ProductFanoutApi.md#disableproductfanout) | Disable product
 [*ProductFanoutApi*](docs/Api/ProductFanoutApi.md) | [**enableProductFanout**](docs/Api/ProductFanoutApi.md#enableproductfanout) | Enable product
 [*ProductFanoutApi*](docs/Api/ProductFanoutApi.md) | [**getProductFanout**](docs/Api/ProductFanoutApi.md#getproductfanout) | Get product enablement status
@@ -656,30 +680,65 @@ The fastly-php API client currently does not support the following endpoints:
 - [`/alerts/history`](https://www.fastly.com/documentation/reference/api/observability/alerts/history) (GET)
 - [`/dns/configurations/{dns_configuration_id}`](https://www.fastly.com/documentation/reference/api/) (DELETE, GET, PATCH)
 - [`/dns/configurations`](https://www.fastly.com/documentation/reference/api/) (GET, POST)
-- [`/domains/v1/tools/status`](https://www.fastly.com/documentation/reference/api/) (GET)
-- [`/domains/v1/tools/suggest`](https://www.fastly.com/documentation/reference/api/) (GET)
-- [`/domains/v1/{domain_id}`](https://www.fastly.com/documentation/reference/api/) (DELETE, GET, PATCH)
-- [`/domains/v1`](https://www.fastly.com/documentation/reference/api/) (GET, POST)
+- [`/dns/v1/tsig-keys/{tsig_key_id}`](https://www.fastly.com/documentation/reference/api/) (DELETE, GET, PATCH)
+- [`/dns/v1/tsig-keys`](https://www.fastly.com/documentation/reference/api/) (GET, POST)
+- [`/dns/v1/zones/{zone_id}`](https://www.fastly.com/documentation/reference/api/) (DELETE, GET, PATCH)
+- [`/dns/v1/zones`](https://www.fastly.com/documentation/reference/api/) (GET, POST)
+- [`/ngwaf/v1/default-dashboards`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/custom-dashboards) (GET)
+- [`/ngwaf/v1/lists/{listId}`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/lists) (DELETE, GET, PATCH)
+- [`/ngwaf/v1/lists`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/lists) (GET, POST)
+- [`/ngwaf/v1/signals/{signal_id}`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/signals) (DELETE, GET, PATCH)
+- [`/ngwaf/v1/signals`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/signals) (GET, POST)
+- [`/ngwaf/v1/timeseries`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/timeseries) (GET)
+- [`/ngwaf/v1/workspaces/{workspaceId}/lists/{listId}`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/lists) (DELETE, GET, PATCH)
+- [`/ngwaf/v1/workspaces/{workspaceId}/lists`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/lists) (GET, POST)
+- [`/ngwaf/v1/workspaces/{workspace_id}/alerts/{alert_id}/signing-key`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/workspace_alerts) (GET, POST)
+- [`/ngwaf/v1/workspaces/{workspace_id}/alerts/{alert_id}`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/workspace_alerts) (DELETE, GET, PATCH)
+- [`/ngwaf/v1/workspaces/{workspace_id}/alerts`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/workspace_alerts) (GET, POST)
+- [`/ngwaf/v1/workspaces/{workspace_id}/dashboards/{dashboard_id}`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/custom-dashboards) (DELETE, GET, PATCH)
+- [`/ngwaf/v1/workspaces/{workspace_id}/dashboards`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/custom-dashboards) (GET, POST)
+- [`/ngwaf/v1/workspaces/{workspace_id}/default-dashboard`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/custom-dashboards) (GET, PUT)
+- [`/ngwaf/v1/workspaces/{workspace_id}/events/{event_id}`](https://www.fastly.com/documentation/reference/api/ngwaf/events) (GET, PATCH)
+- [`/ngwaf/v1/workspaces/{workspace_id}/events`](https://www.fastly.com/documentation/reference/api/ngwaf/events) (GET)
+- [`/ngwaf/v1/workspaces/{workspace_id}/header-links/{header_link_id}`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/header-links) (DELETE, GET, PUT)
+- [`/ngwaf/v1/workspaces/{workspace_id}/header-links`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/header-links) (GET, POST)
+- [`/ngwaf/v1/workspaces/{workspace_id}/redactions/{redaction_id}`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/redactions) (DELETE, GET, PATCH)
+- [`/ngwaf/v1/workspaces/{workspace_id}/redactions`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/redactions) (GET, POST)
+- [`/ngwaf/v1/workspaces/{workspace_id}/requests/{request_id}/report`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/requests) (POST)
+- [`/ngwaf/v1/workspaces/{workspace_id}/requests/{request_id}`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/requests) (GET)
+- [`/ngwaf/v1/workspaces/{workspace_id}/requests`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/requests) (GET)
+- [`/ngwaf/v1/workspaces/{workspace_id}/rules/{rule_id}`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/rules) (DELETE, GET, PATCH)
+- [`/ngwaf/v1/workspaces/{workspace_id}/rules`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/rules) (GET, POST)
+- [`/ngwaf/v1/workspaces/{workspace_id}/thresholds/{threshold_id}`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/thresholds) (DELETE, GET, PATCH)
+- [`/ngwaf/v1/workspaces/{workspace_id}/thresholds`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/thresholds) (GET, POST)
+- [`/ngwaf/v1/workspaces/{workspace_id}/timeseries`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/timeseries) (GET)
+- [`/ngwaf/v1/workspaces/{workspace_id}/top-attacks`](https://www.fastly.com/documentation/reference/api/ngwaf/workspaces) (GET)
+- [`/ngwaf/v1/workspaces/{workspace_id}/virtual-patches/{virtual_patch_id}`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/virtual-patches) (GET, PATCH)
+- [`/ngwaf/v1/workspaces/{workspace_id}/virtual-patches`](https://www.fastly.com/documentation/reference/api/ngwaf/v1/virtual-patches) (GET)
+- [`/ngwaf/v1/workspaces/{workspace_id}`](https://www.fastly.com/documentation/reference/api/ngwaf/workspaces) (DELETE, GET, PATCH)
+- [`/ngwaf/v1/workspaces`](https://www.fastly.com/documentation/reference/api/ngwaf/workspaces) (GET, POST)
 - [`/notifications/integration-types`](https://developer.fastly.com/reference/api/observability/notification) (GET)
 - [`/notifications/integrations/{integration_id}/rotateSigningKey`](https://developer.fastly.com/reference/api/observability/notification) (POST)
 - [`/notifications/integrations/{integration_id}/signingKey`](https://developer.fastly.com/reference/api/observability/notification) (GET)
 - [`/notifications/integrations/{integration_id}`](https://developer.fastly.com/reference/api/observability/notification) (DELETE, GET, PATCH)
 - [`/notifications/integrations`](https://developer.fastly.com/reference/api/observability/notification) (GET, POST)
 - [`/notifications/mailinglist-confirmations`](https://developer.fastly.com/reference/api/observability/notification) (POST)
+- [`/observability/timeseries`](https://www.fastly.com/documentation/reference/api/observability/timeseries/logs/) (GET)
+- [`/observability/timeseries`](https://www.fastly.com/documentation/reference/api/observability/timeseries/sustainability/) (GET)
 - [`/resources/stores/kv/{store_id}/batch`](https://www.fastly.com/documentation/reference/api/services/resources/kv-store-item) (PUT)
-- [`/security/workspaces/{workspace_id}/events/{event_id}`](https://docs.fastly.com/en/ngwaf/) (GET, PATCH)
-- [`/security/workspaces/{workspace_id}/events`](https://docs.fastly.com/en/ngwaf/) (GET)
-- [`/security/workspaces/{workspace_id}/redactions/{redaction_id}`](https://docs.fastly.com/en/ngwaf/) (DELETE, GET, PATCH)
-- [`/security/workspaces/{workspace_id}/redactions`](https://docs.fastly.com/en/ngwaf/) (GET, POST)
-- [`/security/workspaces/{workspace_id}/requests/{request_id}`](https://docs.fastly.com/en/ngwaf/) (GET)
-- [`/security/workspaces/{workspace_id}/requests`](https://docs.fastly.com/en/ngwaf/) (GET)
-- [`/security/workspaces/{workspace_id}/rules/{rule_id}`](https://docs.fastly.com/en/ngwaf/) (DELETE, GET, PATCH)
-- [`/security/workspaces/{workspace_id}/rules`](https://docs.fastly.com/en/ngwaf/) (GET, POST)
-- [`/security/workspaces/{workspace_id}/timeseries`](https://docs.fastly.com/en/ngwaf/) (GET)
-- [`/security/workspaces/{workspace_id}/virtual-patches/{virtual_patch_id}`](https://docs.fastly.com/en/ngwaf/) (GET, PATCH)
-- [`/security/workspaces/{workspace_id}/virtual-patches`](https://docs.fastly.com/en/ngwaf/) (GET)
-- [`/security/workspaces/{workspace_id}`](https://docs.fastly.com/en/ngwaf/) (DELETE, GET, PATCH)
-- [`/security/workspaces`](https://docs.fastly.com/en/ngwaf/) (GET, POST)
+- [`/security/workspaces/{workspace_id}/events/{event_id}`](https://www.fastly.com/documentation/reference/api/security/events) (GET, PATCH)
+- [`/security/workspaces/{workspace_id}/events`](https://www.fastly.com/documentation/reference/api/security/events) (GET)
+- [`/security/workspaces/{workspace_id}/redactions/{redaction_id}`](https://www.fastly.com/documentation/reference/api/security/redactions) (DELETE, GET, PATCH)
+- [`/security/workspaces/{workspace_id}/redactions`](https://www.fastly.com/documentation/reference/api/security/redactions) (GET, POST)
+- [`/security/workspaces/{workspace_id}/requests/{request_id}`](https://www.fastly.com/documentation/reference/api/security/requests) (GET)
+- [`/security/workspaces/{workspace_id}/requests`](https://www.fastly.com/documentation/reference/api/security/requests) (GET)
+- [`/security/workspaces/{workspace_id}/rules/{rule_id}`](https://www.fastly.com/documentation/reference/api/security/rules) (DELETE, GET, PATCH)
+- [`/security/workspaces/{workspace_id}/rules`](https://www.fastly.com/documentation/reference/api/security/rules) (GET, POST)
+- [`/security/workspaces/{workspace_id}/timeseries`](https://www.fastly.com/documentation/reference/api/security/timeseries) (GET)
+- [`/security/workspaces/{workspace_id}/virtual-patches/{virtual_patch_id}`](https://www.fastly.com/documentation/reference/api/security/virtual-patches) (GET, PATCH)
+- [`/security/workspaces/{workspace_id}/virtual-patches`](https://www.fastly.com/documentation/reference/api/security/virtual-patches) (GET)
+- [`/security/workspaces/{workspace_id}`](https://www.fastly.com/documentation/reference/api/security/workspaces) (DELETE, GET, PATCH)
+- [`/security/workspaces`](https://www.fastly.com/documentation/reference/api/security/workspaces) (GET, POST)
 - [`/tls/activations/{tls_activation_id}`](https://www.fastly.com/documentation/reference/api/tls/mutual-tls/activations) (GET, PATCH)
 - [`/tls/activations`](https://www.fastly.com/documentation/reference/api/tls/mutual-tls/activations) (GET)
 - [`/tls/configurations/{tls_configuration_id}`](https://www.fastly.com/documentation/reference/api/) (DELETE, GET, PATCH)
