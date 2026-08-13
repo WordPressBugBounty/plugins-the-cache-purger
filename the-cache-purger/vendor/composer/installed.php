@@ -3,11 +3,11 @@
         'name' => 'kevinpirnie/the-cache-purger',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'bd57a668725e9b4b0f30b9b69dde6f00b944a828',
+        'reference' => '2920bf5f6af425fac2c2d80dba7e6beb289a80f2',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         'fastly/fastly' => array(
@@ -58,7 +58,7 @@
         'kevinpirnie/the-cache-purger' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'bd57a668725e9b4b0f30b9b69dde6f00b944a828',
+            'reference' => '2920bf5f6af425fac2c2d80dba7e6beb289a80f2',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
